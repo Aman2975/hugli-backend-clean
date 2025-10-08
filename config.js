@@ -24,7 +24,7 @@ const config = {
   CORS_ORIGIN: process.env.CORS_ORIGIN || '*',
   
   // WhatsApp Configuration
-  WHATSAPP_TARGET_NUMBER: process.env.WHATSAPP_TARGET_NUMBER || '917347320510',
+  WHATSAPP_TARGET_NUMBER: process.env.WHATSAPP_TARGET_NUMBER || '919464820510',
   
   // IP Restriction Configuration
   ALLOWED_IPS: process.env.ALLOWED_IPS ? process.env.ALLOWED_IPS.split(',') : ['127.0.0.1', '::1', '::ffff:127.0.0.1'],

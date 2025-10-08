@@ -7,7 +7,7 @@ class WhatsAppService {
     this.client = null;
     this.isReady = false;
     this.qrCode = null;
-    this.targetNumber = config.WHATSAPP_TARGET_NUMBER || '917837315102';
+    this.targetNumber = config.WHATSAPP_TARGET_NUMBER || '917347320510';
     this.reconnectAttempts = 0;
     this.maxReconnectAttempts = 5;
     this.reconnectDelay = 10000; // 10 seconds
@@ -34,79 +34,26 @@ class WhatsAppService {
         }
       }
       
-      // Detect Chrome executable path for Ubuntu server
-      const chromePaths = [
-        '/usr/bin/google-chrome-stable',
-        '/usr/bin/google-chrome',
-        '/usr/bin/chromium-browser',
-        '/usr/bin/chromium',
-        '/usr/bin/chrome'
-      ];
-      
-      let executablePath = null;
-      for (const path of chromePaths) {
-        try {
-          const fs = require('fs');
-          if (fs.existsSync(path)) {
-            executablePath = path;
-            console.log('✅ Found Chrome executable at:', path);
-            break;
-          }
-        } catch (error) {
-          // Continue checking other paths
-        }
-      }
-      
-      // Puppeteer configuration optimized for Ubuntu server
-      const puppeteerConfig = {
-        headless: true,
-        args: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
-          '--disable-accelerated-2d-canvas',
-          '--no-first-run',
-          '--no-zygote',
-          '--single-process',
-          '--disable-gpu',
-          '--disable-web-security',
-          '--disable-features=VizDisplayCompositor',
-          '--disable-background-timer-throttling',
-          '--disable-backgrounding-occluded-windows',
-          '--disable-renderer-backgrounding',
-          '--disable-ipc-flooding-protection',
-          '--disable-hang-monitor',
-          '--disable-prompt-on-repost',
-          '--disable-sync',
-          '--disable-translate',
-          '--disable-background-networking',
-          '--disable-default-apps',
-          '--disable-extensions',
-          '--disable-plugins',
-          '--disable-images',
-          '--disable-javascript',
-          '--disable-web-security',
-          '--disable-features=TranslateUI',
-          '--disable-ipc-flooding-protection',
-          '--memory-pressure-off',
-          '--max_old_space_size=4096'
-        ],
-        timeout: 60000
-      };
-      
-      // Add executable path if found
-      if (executablePath) {
-        puppeteerConfig.executablePath = executablePath;
-      } else {
-        console.log('⚠️ No system Chrome found, using bundled Chromium');
-      }
-      
       // Create WhatsApp client with local auth
       this.client = new Client({
         authStrategy: new LocalAuth({
           clientId: 'hugli-printing-whatsapp'
         }),
-        puppeteer: puppeteerConfig
+        puppeteer: {
+          headless: true,
+          args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--disable-gpu',
+            '--disable-web-security',
+            '--disable-features=VizDisplayCompositor'
+          ],
+          timeout: 60000
+        }
       });
 
       // Event handlers
